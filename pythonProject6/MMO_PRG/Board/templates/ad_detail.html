@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ ad.title }}</title>
+</head>
+<body>
+    <h1>{{ ad.title }}</h1>
+    <div>{{ ad.content|safe }}</div>
+    <p><em>Создано: {{ ad.created_at }}</em> пользователем {{ ad.user.username }}</p>
+
+    <h2>Отклики</h2>
+    <ul>
+        {% for response in responses %}
+            <li>
+                <strong>{{ response.user.username }}</strong>: {{ response.text }}
+                <em>({{ response.created_at }})</em>
+            </li>
+        {% empty %}
+            <li>Нет откликов на это объявление.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Оставить отклик</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ response_form.as_p }}
+        <button type="submit">Отправить отклик</button>
+    </form>
+
+    <a href="{% url 'ad_list' %}">Назад к объявлениям</a>
+</body>
+</html>

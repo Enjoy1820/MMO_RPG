@@ -1,0 +1,30 @@
+<h1>Мои отклики</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Объявление</th>
+            <th>Отклик</th>
+            <th>Дата</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for response in responses %}
+        <tr>
+            <td>{{ response.ad.title }}</td>
+            <td>{{ response.text }}</td>
+            <td>{{ response.created_at }}</td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="delete" value="delete">Удалить</button>
+                    <button type="submit" name="accept" value="accept">Принять</button>
+                    <input type="hidden" name="response_id" value="{{ response.id }}">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+

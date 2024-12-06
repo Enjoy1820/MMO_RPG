@@ -1,0 +1,41 @@
+<!-- templates/responses/response.html -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отклик на объявление</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Подключение стилей, если необходимо -->
+</head>
+<body>
+    <div class="container">
+        <h1>Отклик на объявление: {{ ad.title }}</h1>
+        <p><strong>Описание:</strong> {{ ad.description }}</p> <!-- Предполагается, что у модели Ad есть поле description -->
+
+        <h2>Отправить отклик</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- Отображение полей формы -->
+            <button type="submit">Отправить отклик</button>
+        </form>
+
+        <hr>
+        <h3>Предыдущие отклики:</h3>
+        {% if ad.responses.count > 0 %}
+            <ul>
+                {% for response in ad.responses.all %}
+                    <li>
+                        <strong>{{ response.name }}</strong> ({{ response.email }}) <br>
+                        <em>{{ response.created_at|date:"d.m.Y H:i" }}</em>
+                        <p>{{ response.message }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>На это объявление еще нет откликов.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+

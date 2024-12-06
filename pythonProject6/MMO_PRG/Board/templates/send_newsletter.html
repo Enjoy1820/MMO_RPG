@@ -1,0 +1,10 @@
+<h1>Отправка новостной рассылки</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="subject">Тема:</label>
+    <input type="text" name="subject" required>
+    <label for="message">Сообщение:</label>
+    <textarea name="message" required></textarea>
+    <button type="submit">Отправить</button>
+</form>
